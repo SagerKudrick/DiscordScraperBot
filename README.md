@@ -5,3 +5,5 @@ This discord bot scrapes https://www.epicbundle.com/ and posts free games and ga
 See json/configExample.json for an explanation of the config.json file that needs to be present in the bot.js directory. You must provide a bots token, and free/all discord channel IDs. You can also provide a URL for the bots avatar, as well as an image URL that will be present underneath every bot message. 
 
 ![Bot Example Post](https://github.com/SagerKudrick/DiscordScraperBot/blob/main/example_post.png?raw=true)
+![JSON Objects](https://github.com/SagerKudrick/DiscordScraperBot/blob/main/example_scrape.PNG?raw=true)
+
