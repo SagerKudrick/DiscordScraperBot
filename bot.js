@@ -1,16 +1,13 @@
 const { Client, Intents } = require('discord.js');
-
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
-
 const Discord = require('discord.js');
-
 const { filereader } = require('./filereader.js')
-
 const { filewriter } = require('./filewriter.js')
-
 const { scraper } = require('./scraper.js')
-
 const { token, channelall, channelfree, channellogs, postImage, botAvatar } = require('./config.json');
+let channelFree = "";
+let channelAll = "";
+const checkTime = 60 * 60 * 1000;
 
 articleList = [];
 
@@ -59,6 +56,8 @@ const scrape = () => {
                             newAllArticles.push(article);
                             filewriter("./all.json", jsonobject)
                             console.log("Done")
+                            let tmp = makeEmbed(article._title, article._desc, article._link, article._imgsrc)
+                            channelAll.send({ embeds: [tmp] });
                         }
                     if(lowercaseTitle.includes("free"))
                         {
@@ -67,23 +66,12 @@ const scrape = () => {
                             newFreeArticles.push(article);
                             filewriter("./free.json", jsonobject)
                             console.log("Done")
-
+                            let tmp = makeEmbed(article._title, article._desc, article._link, article._imgsrc)
+                            channelFree.send({ embeds: [tmp] });
                         }
 
                 }
         });
-    });
-
-    newAllArticles.forEach(article => {
-        console.log(article._title)
-        console.log(article._desc)
-        console.log(article._link)
-        console.log(article._imgsrc)
-
-    });
-
-    newFreeArticles.forEach(article => {
-
     });
 }
 
@@ -118,7 +106,7 @@ client.on('messageCreate', message => {
 
 const makeEmbed = (title, content, href, image) => {
 
-    const embed = {
+    let embed = {
 				"description": `__**${title}**__ \n\n ${content}`,
 				"url": "https://discordapp.com",
 				"color": 7286527,
@@ -139,7 +127,7 @@ const makeEmbed = (title, content, href, image) => {
 					}
 				],
 				"author": {
-					"name": "free ish bot",
+					"name": "Free Games Bot",
 					"url": "https://discordapp.com",
 					"icon_url": botAvatar
 				}
@@ -149,4 +137,20 @@ const makeEmbed = (title, content, href, image) => {
 }
 
 client.login(token);
-scrape()
+client.once('ready', () => {
+
+    console.log('Ready!');
+    // get channels
+    channelFree = client.channels.cache.get(channelfree);
+    channelAll = client.channels.cache.get(channelall);
+
+    // initial scrape
+    scrape();
+    // set an interval so we scrape every x amount of time
+    setInterval(() => {
+        // time has elapsed, scrape again
+        console.log("Scraping...")
+        scrape();
+    }, checkTime);
+
+});
