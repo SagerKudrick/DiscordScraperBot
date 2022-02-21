@@ -22,6 +22,10 @@ freeArticles = [];
 newAllArticles = [];
 newFreeArticles = [];
 
+// empty array for article objects
+newAllArticleObjects = [];
+newFreeArticleObjects = [];
+
 const scrape = () => {
     scraper( (result) =>
     {
@@ -60,7 +64,7 @@ const scrape = () => {
                         {
                             // want to write it
                             console.log("Writing " + article.title + " to free.json")
-                            newAllArticles.push(article);
+                            newFreeArticles.push(article);
                             filewriter("./free.json", jsonobject)
                             console.log("Done")
 
@@ -71,6 +75,10 @@ const scrape = () => {
     });
 
     newAllArticles.forEach(article => {
+        console.log(article._title)
+        console.log(article._desc)
+        console.log(article._link)
+        console.log(article._imgsrc)
 
     });
 
