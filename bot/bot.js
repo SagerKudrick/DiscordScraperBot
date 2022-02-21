@@ -69,7 +69,6 @@ const scrape = () => {
                             let tmp = makeEmbed(article._title, article._desc, article._link, article._imgsrc)
                             channelFree.send({ embeds: [tmp] });
                         }
-
                 }
         });
     });
