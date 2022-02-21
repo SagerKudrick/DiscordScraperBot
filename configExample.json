@@ -1,3 +1,4 @@
+// rename to config.json
 {
     "token":"discord token found at https://discord.com/developers/applications/#######/bot, string of letters/chars, uppercase/lowercase",
     "channelfree":"discord channel; right click and copy ID (sends only games with free in the title to, case insensitive)",
