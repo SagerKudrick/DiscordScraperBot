@@ -92,18 +92,6 @@ const writeFreeGames = (data) => {
     filewriter("./free.json", data)
 }
 
-client.once('ready', () => {
-	console.log('Ready!');
-
-});
-
-client.on('messageCreate', message => {
-	if (message.content == "!test") {
-		list();
-	}
-
-})
-
 const makeEmbed = (title, content, href, image) => {
 
     let embed = {
